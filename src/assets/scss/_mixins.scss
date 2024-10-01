@@ -1,0 +1,73 @@
+@mixin gallery-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2rem;
+    padding: 0 3rem;
+    margin: 0 5.5rem;
+    margin-top: -50px;
+    margin-bottom: 1200px;
+    position: relative;
+    width: calc(100% - 11rem);
+    @include respond-to("mobile") {
+        padding: 0 1rem;
+        margin: -25px 1rem 0 1rem;
+        width: calc(100% - 2rem);
+    }
+    @include respond-to("tablet") {
+        padding: 0 2rem;
+        margin: -50px 2rem 0 2rem;
+        width: calc(100% - 4rem);
+    }
+    @include respond-to("desktop") {
+        margin: -50px auto 0 auto !important;
+        width: 100%;
+        max-width: 1024px;
+    }
+}
+
+@mixin inner-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: start;
+    padding: 1rem;
+    border-radius: 0.6rem;
+    position: relative;
+    width: 100%;
+    transition: transform 0.5s;
+    gap: 1rem;
+    &:hover {
+        transform: translateY(-10px);
+    }
+    height: 300px;
+    background-color: $color-accent;
+    box-shadow: 0px 1px -4px rgba(0, 0, 0, 0.1);
+}
+
+@mixin respond-to($breakpoint) {
+    @if $breakpoint=="mobile" {
+        @media (max-width: 767px) {
+            @content;
+        }
+    }
+    @else if $breakpoint=="tablet" {
+        @media (min-width: 768px) {
+            @content;
+        }
+    }
+    @else if $breakpoint=="desktop" {
+        @media (min-width: 1024px) {
+            @content;
+        }
+    }
+}
+
+@mixin upper-text {
+    margin-top: 2rem;
+    text-align: start;
+    font-size: 1.5rem;
+    font-weight: 700;
+    width: calc(100% - 8rem);
+    line-height: 2.5;
+    color: var(--color-accent-text-dark);
+}
