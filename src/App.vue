@@ -4,17 +4,14 @@ import LoadingView from "./components/LoadingView.vue";
 import MainView from "./components/MainView.vue";
 import ErrorVue from "./components/ErrorVue.vue";
 import { fetchUnsplashImages } from "./config/api";
-import { ref, onMounted, watch, onUnmounted } from "vue";
+import { ref, onMounted } from "vue";
 
 const images = ref([]);
 const searchValue = ref("African");
 const loading = ref(false);
 const error = ref<string|null>(null);
 const searchImages = async (search: string) => {
-  console.log(search);
-  
   searchValue.value = search;
-  console.log(searchValue.value);
   try {
     loading.value = true;
     const response = await fetchUnsplashImages(search);
@@ -34,14 +31,14 @@ const searchImages = async (search: string) => {
   }
 };
 onMounted(searchImages);
-watch(searchValue, searchImages);
+
 </script>
 
 <template>
   <LoadingView :search="searchValue" v-if="loading" />
   <ErrorVue :error="error" v-else-if="error" />
   <template v-else>
-    <HeaderVue @on-search="searchImages"  />
+    <HeaderVue @on-search="searchImages" :search-value="searchValue"  />
     <MainView :images="images" :search="searchValue" />
   </template>
 </template>

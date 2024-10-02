@@ -1,21 +1,31 @@
 <script lang="ts" setup>
 import TopUi from "./TopUi.vue";
-import { ref } from "vue";
-const search = ref("African");
-const emits = defineEmits<{ (e: "on-search", input: string): void }>();
+import { ref, watch,onUpdated } from "vue";
 
+const props = defineProps<{ searchValue: string }>();
+const emits = defineEmits<{ (e: "on-search", input: string): void }>();
+const input = ref(props.searchValue);
 const searchHandler = (e: KeyboardEvent) => {
-  console.log(e)
-  if (e.key === "Enter"&&search.value !== "") {
-    emits("on-search", search.value.toLowerCase());
+  const target = e.target as HTMLInputElement;
+  input.value = target.value;
+  if (e.key === "Enter"&&input.value !== "") {
+    emits("on-search", input.value.toLowerCase());
+   
   }
 };
-const changeHandler = (e: Event) => {
-  const target = e.target as HTMLInputElement;
-  search.value = target.value;
-};
+watch(
+  () => props.searchValue,
+  (newValue) => {
+    input.value = newValue;
+  }
+);
+onUpdated(() => {
+  console.log("Updated");
+  console.log(input.value);
+});
 </script>
 <template>
+  
   <TopUi>
     <label class="search-label" for="search-photo">
       <i class="search-icon">
@@ -32,17 +42,17 @@ const changeHandler = (e: Event) => {
           />
         </svg>
       </i>
-
       <input
         type="search"
         placeholder="Search for photos"
-        v-on:keydown="searchHandler"
-        v-model="search"
-        v-on:change="changeHandler"
+        v-model="input"
+        @keydown="searchHandler"
+        id="search-photo"
       />
     </label>
   </TopUi>
 </template>
+
 <style lang="scss" scoped>
 .search-icon {
   position: absolute;
