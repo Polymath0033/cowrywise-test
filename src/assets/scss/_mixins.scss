@@ -8,6 +8,7 @@
     margin-bottom: 1200px;
     position: relative;
     width: calc(100% - 11rem);
+    padding-bottom: 5rem !important;
     @include respond-to("mobile") {
         padding: 0 1rem;
         margin: -25px 1rem 0 1rem;

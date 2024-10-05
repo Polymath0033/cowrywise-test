@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import TopUi from "./TopUi.vue";
-import { ref, watch,onUpdated } from "vue";
+import { ref, watch, onUpdated } from "vue";
 
 const props = defineProps<{ searchValue: string }>();
 const emits = defineEmits<{ (e: "on-search", input: string): void }>();
@@ -8,9 +8,8 @@ const input = ref(props.searchValue);
 const searchHandler = (e: KeyboardEvent) => {
   const target = e.target as HTMLInputElement;
   input.value = target.value;
-  if (e.key === "Enter"&&input.value !== "") {
+  if (e.key === "Enter" && input.value !== "") {
     emits("on-search", input.value.toLowerCase());
-   
   }
 };
 watch(
@@ -25,7 +24,6 @@ onUpdated(() => {
 });
 </script>
 <template>
-  
   <TopUi>
     <label class="search-label" for="search-photo">
       <i class="search-icon">
@@ -76,12 +74,12 @@ onUpdated(() => {
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   max-width: 1024px;
-  @include respond-to('desktop'){
+  @include respond-to("desktop") {
     margin-left: auto;
     margin-right: auto;
   }
   @include respond-to("mobile") {
-    width:100%;
+    width: 100%;
   }
 }
 .search-label input {

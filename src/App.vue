@@ -31,7 +31,6 @@ const searchImages = async (search: string) => {
   }
 };
 onMounted(searchImages);
-
 </script>
 
 <template>
